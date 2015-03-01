@@ -51,9 +51,9 @@ If you find features that would make this package better, or you know better ope
  * 100% Markdown and HTML compatible
  * List structure of the Markdown file
  * List structure of folders
- * --Gulp and Grunt integration--
- * --Config files--
- * --Source inlinking and quoting--
+ * ~~Gulp and Grunt integration~~
+ * ~~Config files~~
+ * ~~Source inlinking and quoting~~
 
 
 ## Installation
