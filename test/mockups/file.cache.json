@@ -1,0 +1,39 @@
+{
+  "title": "Roadmarks",
+  "items": [
+    {
+      "title": "Why?",
+      "level": 2
+    },
+    {
+      "title": "Features",
+      "level": 2
+    },
+    {
+      "title": "Installation",
+      "level": 2
+    },
+    {
+      "title": "Usage",
+      "level": 2,
+      "items": [
+        {
+          "title": "Markup",
+          "level": 3
+        },
+        {
+          "title": "Rules",
+          "level": 3
+        }
+      ]
+    },
+    {
+      "title": "Credits",
+      "level": 2
+    },
+    {
+      "title": "Licence",
+      "level": 2
+    }
+  ]
+}

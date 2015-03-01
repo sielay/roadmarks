@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+var cliArgs = require('command-line-args'),
+    chalk   = require('chalk'),
+    runner  = require('./../src/runner');
+
+/* define the command-line options */
+var cli = cliArgs([
+    {name: 'verbose', type: Boolean, alias: 'v', description: 'Write plenty output'},
+    {name: 'verbose2', type: Boolean, alias: 'vv', description: 'Write plenty output'},
+    {name: 'verbose3', type: Boolean, alias: 'vvv', description: 'Write plenty output'},
+    {name: 'help', type: Boolean, alias: 'h', description: 'Print usage instructions'},
+    {name: 'dir', type: String, alias: 'd', description: 'Project main directory'},
+    {name: 'file', type:String, alias: 'f', description: 'Single file'}
+]);
+
+/* parse the supplied command-line values */
+try {
+    var options = cli.parse();
+} catch (e) {
+    console.error(chalk.red(e));
+    return;
+}
+
+if (options.verbose) options.verbose = 1;
+if (options.verbose2) options.verbose = 2;
+if (options.verbose3) options.verbose = 3;
+
+runner(options);

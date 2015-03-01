@@ -1,0 +1,55 @@
+Ignore
+======
+
+<!-- RM -->
+TAG-CONTENT
+<!-- /RM -->
+
+Git flavored code blocks
+------------------------
+
+```html
+    <!-- RM -->
+    <!-- /RM -->
+```
+
+Regular code blocks
+-------------------
+
+```
+    <!-- RM(depth:1) -->
+    <!-- /RM -->
+```
+
+Tab bases code blocks
+---------------------
+
+    <!-- RM -->
+    <!-- /RM -->
+
+RM-IGNORE
+---------
+
+<!-- RM-IGNORE -->
+    <!-- RM -->
+    <!-- /RM -->
+    <!-- /RM-IGNORE -->
+<!-- RM -->
+<!-- /RM -->
+<!-- /RM-IGNORE -->
+
+    <!-- RM-IGNORE -->
+        <!-- RM -->
+        <!-- /RM -->
+    <!-- /RM-IGNORE -->
+
+Not ignored
+-----------
+
+<!-- RM -->
+TAG-CONTENT
+<!-- /RM -->
+
+<!-- RM(depth:1) -->
+TAG-CONTENT
+<!-- /RM -->

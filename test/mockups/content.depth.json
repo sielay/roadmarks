@@ -1,0 +1,38 @@
+{
+  "depth": 1,
+  "files": {"doc": {}},
+  "tree": "*",
+  "nocontent": false,
+  "notop": false,
+  "nosiblings": true,
+  "noparent": false,
+  "content": {
+    "title": "Roadmarks",
+    "items": [
+      {
+        "title": "Why?",
+        "level": 2
+      },
+      {
+        "title": "Features",
+        "level": 2
+      },
+      {
+        "title": "Installation",
+        "level": 2
+      },
+      {
+        "title": "Usage",
+        "level": 2
+      },
+      {
+        "title": "Credits",
+        "level": 2
+      },
+      {
+        "title": "Licence",
+        "level": 2
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "roadmarks",
+  "version": "1.0.0",
+  "description": "Extensive tool to create and maintain Markdown documentation tables of contents and navigation",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sielay/roadmarks.git"
+  },
+  "keywords": [
+    "toc",
+    "md",
+    "markdown",
+    "table",
+    "of",
+    "contents",
+    "list",
+    "navigation",
+    "doc",
+    "documentation"
+  ],
+  "author": "lukaszsielski@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sielay/roadmarks/issues"
+  },
+  "homepage": "https://github.com/sielay/roadmarks",
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "command-line-args": "^0.5.5",
+    "each-async": "^1.1.1",
+    "glob": "^4.4.1",
+    "lodash": "^3.3.1",
+    "marked": "^0.3.3",
+    "slash": "^1.0.0",
+    "wildglob": "0.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "should": "^5.0.1"
+  }
+}

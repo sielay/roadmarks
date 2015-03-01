@@ -1,0 +1,20 @@
+{
+  "depth": 10,
+  "tree": "markup",
+  "files": {
+    "markup": {
+      "content.MD": true,
+      "ignore.mD": true,
+      "media.md": true,
+      "paging.md": true,
+      "snippets.md": true,
+      "tree.MD": true
+    }
+  },
+  "nocontent": true,
+  "notop": false,
+  "nosiblings": false,
+  "noparent": false,
+  "previous": "INDEX.MD",
+  "next": "markup"
+}

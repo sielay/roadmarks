@@ -1,0 +1,34 @@
+{
+  "depth": 10,
+  "files": {},
+  "tree": false,
+  "nocontent": false,
+  "notop": true,
+  "nosiblings": true,
+  "noparent": true,
+  "content": {
+    "title": "Ignore",
+    "items": [
+      {
+        "title": "Git flavored code blocks",
+        "level": 2
+      },
+      {
+        "title": "Regular code blocks",
+        "level": 2
+      },
+      {
+        "title": "Tab bases code blocks",
+        "level": 2
+      },
+      {
+        "title": "RM-IGNORE",
+        "level": 2
+      },
+      {
+        "title": "Not ignored",
+        "level": 2
+      }
+    ]
+  }
+}
