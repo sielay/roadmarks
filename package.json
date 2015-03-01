@@ -1,10 +1,13 @@
 {
   "name": "roadmarks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extensive tool to create and maintain Markdown documentation tables of contents and navigation",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
+  },
+  "bin": {
+    "lessc": "./bin/roadmarks"
   },
   "repository": {
     "type": "git",
