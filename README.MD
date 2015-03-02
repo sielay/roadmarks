@@ -12,7 +12,7 @@ This documentation (including nested sits in built with `Roadmarks`)
 <!-- /RM-IGNORE -->
 
 <!-- RM(tree:*) -->
-[Got to parent](./README.MD) | [Got to top](/README.MD)
+
 * [Why?](#why)
 * [Features](#features)
 * [Installation](#installation)
@@ -24,15 +24,13 @@ This documentation (including nested sits in built with `Roadmarks`)
 
 * [README](./doc)
   * [Roadmarks](./doc/INDEX.MD)
-  * [README.md](./doc/README.md)
   * [Instalation](./doc/installation.md)
   * [README](./doc/markup)
-    * [README.md](./doc/markup/README.md)
     * [content](./doc/markup/content.MD)
     * [Ignore](./doc/markup/ignore.mD)
-    * [media.md](./doc/markup/media.md)
-    * [paging.md](./doc/markup/paging.md)
-    * [snippets.md](./doc/markup/snippets.md)
+    * [media](./doc/markup/media.md)
+    * [paging](./doc/markup/paging.md)
+    * [snippets](./doc/markup/snippets.md)
     * [Tree](./doc/markup/tree.MD)
 
 <!-- /RM -->
@@ -67,8 +65,19 @@ sudo npm install roadmarks -g
 
 ## Usage
 
+Start in current dir
 ```
-roadmarks /path/to/my/project
+roadmarks 
+```
+
+Start in other dir
+```
+roadmarks -d /path/to/my/project
+```
+
+Process one file
+```
+roadmarks -f /path/to/my/file.MD
 ```
 
 ### Markup
@@ -103,7 +112,7 @@ Author [Lukasz Sielski](http://github.com/sielay). Hugely improved thanks to com
 
 <!-- RM-INC(LICENSE) -->
 
-
+MIT of course
 
 
 

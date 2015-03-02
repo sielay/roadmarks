@@ -16,35 +16,44 @@ module.exports = function (options) {
 
         console.log(chalk.blue('Processing file ') + chalk.yellow(file));
 
-        rm.parse(
-            fs.readFileSync(file, 'utf8'),
-            file,
-            function (tag, filePath, cb) {
-                rm.process(tag, filePath, options.dir, cb);
-            },
-            function (tag, filePath, cb) {
-                rm.defaultFormatter(tag, filePath, options.dir, cb);
-            },
-            function (error, blockData) {
-                if(error) {
-                    console.log(chak.red(file));
-                    console.log(chak.red(error));
-                    return iterate();
-                }
-                fs.writeFile(file, blockData, 'utf8', function(error) {
-                    if(error) {
+        fs.readFile(file, 'utf8', function (error, content) {
+            if (error) {
+                console.log(chalk.red(error));
+                return callback();
+            }
+            rm.parse(
+                content,
+                file,
+                function (tag, filePath, cb) {
+                    rm.process(tag, filePath, options.dir, cb);
+                },
+                function (tag, filePath, cb) {
+                    rm.defaultFormatter(tag, filePath, options.dir, cb);
+                },
+                function (error, blockData) {
+                    if (error) {
                         console.log(chak.red(file));
                         console.log(chak.red(error));
-                        return   callback();
+                        return iterate();
                     }
-                    callback();
-                });
-            }
-        );
+                    fs.writeFile(file, blockData, 'utf8', function (error) {
+                        if (error) {
+                            console.log(chak.red(file));
+                            console.log(chak.red(error));
+                            return callback();
+                        }
+                        callback();
+                    });
+                }
+            );
+        });
+
+
     }
 
-    if(options.file) {
-        parseFile(options.file, function(){});
+    if (options.file) {
+        parseFile(options.file, function () {
+        });
         return;
     }
 
@@ -57,6 +66,7 @@ module.exports = function (options) {
                 var file = list.shift();
                 parseFile(file, iterate);
             }
+
             iterate();
         }
     );

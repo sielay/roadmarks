@@ -88,7 +88,7 @@ function RoadMarks(config) {
 RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowReadme, callback) {
 
     var excludes = this.getDefaultExcludes(),
-        searchPath = (rootSearchPath + this.getDefaultPattern()).replace(/\/\//g, '/');
+        searchPath = (rootSearchPath + this.getDefaultPattern()).replace(/\/\//g, '/'), g;
 
     if (!allowReadme) {
         excludes = _.clone(excludes);
@@ -100,10 +100,13 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
     //this.debug(2, 'RoadMarks.findDocFiles - excludes ', excludes);
     //this.debug(2, 'RoadMarks.findDocFiles - searchPattern ', searchPath);
 
-    glob(searchPath, function (error, fileList) {
+    g = glob(searchPath, function (error, fileList) {
 
         if (error) {
-            return callback(error);
+            if(error.code !== 'EACCESS') {
+                return callback(error);
+            }
+            return g.continue();
         }
         fileList.forEach(function (item, index) {
             fileList[index] = slash(path.relative(rootPath, item));
@@ -185,7 +188,7 @@ RoadMarks.prototype.fetch = function (absPath, callback) {
  * @param tokens
  */
 RoadMarks.prototype.harvest = function (tokens, filePath) {
-    var title = path.basename(filePath, '.md'),
+    var title = path.basename(filePath).replace(/\.(md)$/i,''),
         bundle = [],
         ignore = false,
         ignoreOpen = /\<\!--\s*RM-IGNORE\s*--\>/,
