@@ -614,7 +614,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
                 return cb(null, string);
             }
 
-            var fullPath = parent + '/' + key,
+            var fullPath = path.resolve(parent + '/' + key),
                 indexPath = fullPath,
                 isDir = fs.lstatSync(fullPath).isDirectory();
 
@@ -627,10 +627,13 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
             that.debug(1,'fp',fullPath);
 
+            that.debug(2,'fullPath',fullPath);
+            that.debug(2,'indexPath',indexPath);
+
             that.get(indexPath, function (error, tag) {
 
                 string += doIndent(indent) + '* [';
-                string += (tag && tag.title) ? tag.title : key;
+                string += (tag && tag.title && !(isDir && tag.title === 'README')) ? tag.title : (key !== '..') ? key : path.basename(fullPath);
                 string += '](./';
                 string += path.relative(rootdir,fullPath);
                 string += ')' + EOL;

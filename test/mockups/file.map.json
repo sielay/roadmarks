@@ -1,5 +1,8 @@
 {
+  "README.MD": true,
   "doc": {
+    "INDEX.MD": true,
+    "installation.md": true,
     "markup": {
       "content.MD": true,
       "ignore.mD": true,
@@ -7,8 +10,6 @@
       "paging.md": true,
       "snippets.md": true,
       "tree.MD": true
-    },
-    "INDEX.MD": true,
-    "installation.md": true
+    }
   }
 }

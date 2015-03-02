@@ -47,7 +47,7 @@ Tree depth
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
 
-* [README](./..)
+* [doc](./..)
 * [content](./content.MD)
 * [Ignore](./ignore.mD)
 * [media](./media.md)
