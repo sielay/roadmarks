@@ -92,7 +92,7 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
 
     if (!allowReadme) {
         excludes = _.clone(excludes);
-        excludes.push(/README\.MD$/);
+        excludes.push(/README\.md$/);
     }
 
     //this.debug(1, 'RoadMarks.findDocFiles ', rootSearchPath);
@@ -185,7 +185,7 @@ RoadMarks.prototype.fetch = function (absPath, callback) {
  * @param tokens
  */
 RoadMarks.prototype.harvest = function (tokens, filePath) {
-    var title = path.basename(filePath, '.MD'),
+    var title = path.basename(filePath, '.md'),
         bundle = [],
         ignore = false,
         ignoreOpen = /\<\!--\s*RM-IGNORE\s*--\>/,
@@ -556,22 +556,22 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
     //this.debug(2, 'RoadMarks..defaultFormatter#noparent', tag.noparent);
     if (tag.noparent === false) {
 
-        if (relation !== '' && relation !== 'README.MD') {
+        if (relation !== '' && relation !== 'README.md') {
 
-            if (basename !== 'README.MD' && fs.existsSync(dirname + '/README.MD')) {
-                navLinks.push('[Got to parent](./README.MD)');
+            if (basename !== 'README.md' && fs.existsSync(dirname + '/README.md')) {
+                navLinks.push('[Got to parent](./README.md)');
             }
-            if (basename === 'README.MD' && fs.existsSync(dirname + '/../README.MD')) {
-                navLinks.push('[Got to parent](./../README.MD)');
+            if (basename === 'README.md' && fs.existsSync(dirname + '/../README.md')) {
+                navLinks.push('[Got to parent](./../README.md)');
             }
         }
     }
 
     //this.debug(2, 'RoadMarks..defaultFormatter#notop', tag.notop);
     if (tag.notop === false) {
-        if (relation !== '' && relation !== 'README.MD') {
-            if (fs.existsSync(projectAbsPath + '/README.MD')) {
-                navLinks.push('[Got to top](/README.MD)');
+        if (relation !== '' && relation !== 'README.md') {
+            if (fs.existsSync(projectAbsPath + '/README.md')) {
+                navLinks.push('[Got to top](/README.md)');
             }
         }
     }
@@ -617,8 +617,8 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
 
             if(isDir) {
-                if(fs.existsSync(fullPath + '/README.MD')) {
-                    indexPath = fullPath + '/README.MD';
+                if(fs.existsSync(fullPath + '/README.md')) {
+                    indexPath = fullPath + '/README.md';
                 }
             }
 

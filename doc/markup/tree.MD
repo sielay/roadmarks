@@ -2,7 +2,6 @@ Tree
 ====
 
 <!-- RM -->
-
 [Got to parent](./README.MD) | [Got to top](/README.MD)
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
@@ -19,11 +18,11 @@ Tree path
 ```
 
 <!-- RM(tree:./../*) -->
-
 [Got to parent](./README.MD) | [Got to top](/README.MD)
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
 
+* [README.md](./README.md)
 * [content](./content.MD)
 * [Ignore](./ignore.mD)
 * [media.md](./media.md)
@@ -42,12 +41,12 @@ Tree depth
 ```
 
 <!-- RM(depth:1,tree:./../../*) -->
-
 [Got to parent](./README.MD) | [Got to top](/README.MD)
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
 
 * [README](./..)
+* [README.md](./README.md)
 * [content](./content.MD)
 * [Ignore](./ignore.mD)
 * [media.md](./media.md)

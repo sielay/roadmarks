@@ -12,7 +12,7 @@ This documentation (including nested sits in built with `Roadmarks`)
 <!-- /RM-IGNORE -->
 
 <!-- RM(tree:*) -->
-
+[Got to parent](./README.MD) | [Got to top](/README.MD)
 * [Why?](#why)
 * [Features](#features)
 * [Installation](#installation)
@@ -24,8 +24,10 @@ This documentation (including nested sits in built with `Roadmarks`)
 
 * [README](./doc)
   * [Roadmarks](./doc/INDEX.MD)
+  * [README.md](./doc/README.md)
   * [Instalation](./doc/installation.md)
   * [README](./doc/markup)
+    * [README.md](./doc/markup/README.md)
     * [content](./doc/markup/content.MD)
     * [Ignore](./doc/markup/ignore.mD)
     * [media.md](./doc/markup/media.md)
@@ -88,8 +90,8 @@ I tried to put rules as close to Markdown specifciation and way how GitHub works
  * File is described in lists by level one heading. If absent, file name is used.
  * Files are listed in alphabetical order (of file, not heading).
  * Tables of content combining internal headers and files, list internal headers first
- * README.MD is being used as index file of directory (INDEX seems to be natural, but is not used by GitHub).
- * README.MD is alias to folder - so all sibling files in the same directory are understood as it's children.
+ * README.md is being used as index file of directory (INDEX seems to be natural, but is not used by GitHub).
+ * README.md is alias to folder - so all sibling files in the same directory are understood as it's children.
  * Multiple level one headings are being ignored.
   
 
