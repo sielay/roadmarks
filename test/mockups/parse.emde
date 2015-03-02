@@ -2,6 +2,7 @@ Ignore
 ======
 
 <!-- RM -->
+
 TAG-CONTENT
 <!-- /RM -->
 
@@ -47,9 +48,11 @@ Not ignored
 -----------
 
 <!-- RM -->
+
 TAG-CONTENT
 <!-- /RM -->
 
 <!-- RM(depth:1) -->
+
 TAG-CONTENT
 <!-- /RM -->

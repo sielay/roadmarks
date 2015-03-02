@@ -398,7 +398,7 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
 
                     //that.debug(3, 'Replaced ', tag.__original[0]);
 
-                    var replacement = tag.__original[1] + EOL + snippet + EOL + '<!-- /RM -->';
+                    var replacement = tag.__original[1] + EOL + EOL + snippet + EOL + '<!-- /RM -->';
                     stack = stack.replace(tag.__original[0], replacement);
 
                 }
