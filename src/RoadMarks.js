@@ -360,8 +360,8 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
         chunk = blockData.chunks[i++];
 
         if(chunk === null) {
-            console.log(chalk.red('There was an issue with chunk at index ' + i + '. Skipping chunk.'));
-            console.log(chalk.red(blockData));
+            console.error(chalk.red('There was an issue with chunk at index ' + i + '. Skipping chunk.'));
+            console.error(chalk.red(JSON.stringify(blockData,null,4)));
             return iterate();
         }
 
