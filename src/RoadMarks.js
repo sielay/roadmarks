@@ -87,35 +87,52 @@ function RoadMarks(config) {
  */
 RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowReadme, callback) {
 
-    var excludes = this.getDefaultExcludes(),
+    var excludes = _.clone(this.getDefaultExcludes()),
+        excludedirs = [],
         searchPath = (rootSearchPath + this.getDefaultPattern()).replace(/\/\//g, '/'), g;
 
     if (!allowReadme) {
-        excludes = _.clone(excludes);
         excludes.push(/README\.md$/);
     }
 
-    //this.debug(1, 'RoadMarks.findDocFiles ', rootSearchPath);
-    //this.debug(2, 'RoadMarks.findDocFiles - project path ', rootPath);
-    //this.debug(2, 'RoadMarks.findDocFiles - excludes ', excludes);
-    //this.debug(2, 'RoadMarks.findDocFiles - searchPattern ', searchPath);
-
-    g = glob(searchPath, function (error, fileList) {
-
+    g = glob(rootSearchPath + '/**/.+(git|hg)', {dot:true,nodir:false}, function(error, dirList) {
         if (error) {
-            if(error.code !== 'EACCESS') {
+            if (error.code !== 'EACCESS') {
                 return callback(error);
             }
             return g.continue();
         }
-        fileList.forEach(function (item, index) {
-            fileList[index] = slash(path.relative(rootPath, item));
+        dirList.forEach(function (dir) {
+            var dirPath = path.relative(rootPath, path.dirname(dir));
+            if (dirPath !== ''  ) {
+                excludes.push(new RegExp('^' + dirPath));
+            }
         });
-        callback(null, fileList.filter(function (item) {
-            return !excludes.some(function (exclude) {
-                return exclude.test(item);
+        //this.debug(1, 'RoadMarks.findDocFiles ', rootSearchPath);
+        //this.debug(2, 'RoadMarks.findDocFiles - project path ', rootPath);
+        //this.debug(2, 'RoadMarks.findDocFiles - excludes ', excludes);
+        //this.debug(2, 'RoadMarks.findDocFiles - searchPattern ', searchPath);
+
+        g = glob(searchPath, function (error, fileList) {
+
+            if (error) {
+                if (error.code !== 'EACCESS') {
+                    return callback(error);
+                }
+                return g.continue();
+            }
+
+            fileList.forEach(function (item, index) {
+                fileList[index] = slash(path.relative(rootPath, item));
             });
-        }));
+
+            callback(null, fileList.filter(function (item) {
+                return !excludes.some(function (exclude) {
+                    return exclude.test(item);
+                });
+            }));
+        });
+
     });
 };
 

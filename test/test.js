@@ -227,3 +227,41 @@ describe('Formatter', function () {
     });
 
 });
+
+describe('.git and .hg ignoring', function (done) {
+
+    it('Should not list directory containing .git subfolder', function(next){
+
+        fs.mkdir(DOC_PATH+'/markup/.git', function(error, success) {
+            if (error && error.code !== 'EEXIST') {
+                console.log(chalk.red(error));
+                return next();
+            }
+
+            var rm = new RoadMarks();
+            rm.findDocFiles(__dirname + '/..', PROJECT_PATH, false, function (error, list) {
+                should.not.exist(error);
+                should(list).be.eql(jsonMock('file.list.git'));
+                fs.rmdir(DOC_PATH + '/markup/.git', next);
+            });
+        });
+    });
+
+    it('Should not list directory containing .hg subfolder', function(next){
+
+        fs.mkdir(DOC_PATH+'/markup/.hg', function(error, success) {
+            if (error && error.code !== 'EEXIST') {
+                console.log(chalk.red(error));
+                return next();
+            }
+
+            var rm = new RoadMarks();
+            rm.findDocFiles(__dirname + '/..', PROJECT_PATH, false, function (error, list) {
+                should.not.exist(error);
+                should(list).be.eql(jsonMock('file.list.git'));
+                fs.rmdir(DOC_PATH + '/markup/.hg', next);
+            });
+        });
+    });
+
+});

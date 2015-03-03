@@ -1,6 +1,6 @@
 {
   "name": "roadmarks",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Extensive tool to create and maintain Markdown documentation tables of contents and navigation",
   "main": "index.js",
   "scripts": {
