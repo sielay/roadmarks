@@ -106,6 +106,7 @@ I tried to put rules as close to Markdown specifciation and way how GitHub works
  * README.md is alias to folder - so all sibling files in the same directory are understood as it's children.
  * Multiple level one headings are being ignored.
   
+## 1.2.3-a Łukasz_testing? header `special characters`;.,links How+they%20 behave
 
 ## Credits
 
