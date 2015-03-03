@@ -359,6 +359,12 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
         }
         chunk = blockData.chunks[i++];
 
+        if(chunk === null) {
+            console.log(chalk.red('There was an issue with chunk at index ' + i + '. Skipping chunk.'));
+            console.log(chalk.red(blockData));
+            return iterate();
+        }
+
         for (l; l < chunk[0]; l++) result += blockData.lines[l] + EOL;
         for (l; l <= chunk[1]; l++) stack += blockData.lines[l] + EOL;
 
