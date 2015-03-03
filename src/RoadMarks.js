@@ -90,7 +90,7 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
 
     var excludes = _.clone(this.getDefaultExcludes()),
         excludedirs = [],
-        searchPath = (rootSearchPath + this.getDefaultPattern()).replace(/\/\//g, '/'), g, gi = null;
+        searchPath = (rootSearchPath + this.getDefaultPattern()).replace(/\/\//g, '/'), g, gi = null, that = this;
 
     if (!allowReadme) {
         excludes.push(/README\.md$/);
