@@ -10,7 +10,8 @@ var fs        = require('fs'),
     chalk     = require('chalk'),
     eachAsync = require('each-async'),
     _         = require('lodash'),
-    runner    = require('./runner');
+    runner    = require('./runner'),
+    giParser = require('gitignore-parser');
 
 /**
  * @class
@@ -89,11 +90,15 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
 
     var excludes = _.clone(this.getDefaultExcludes()),
         excludedirs = [],
-        searchPath = (rootSearchPath + this.getDefaultPattern()).replace(/\/\//g, '/'), g;
+        searchPath = (rootSearchPath + this.getDefaultPattern()).replace(/\/\//g, '/'), g, gi = null;
 
     if (!allowReadme) {
         excludes.push(/README\.md$/);
     }
+
+    if(fs.existsSync(rootSearchPath + '/.gitignore')) {
+        gi = giParser.compile(fs.readFileSync(rootSearchPath+'/.gitignore', 'utf8'));
+    };
 
     g = glob(rootSearchPath + '/**/.+(git|hg)', {dot:true,nodir:false}, function(error, dirList) {
         if (error) {
@@ -128,6 +133,9 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
 
             callback(null, fileList.filter(function (item) {
                 return !excludes.some(function (exclude) {
+                    if(gi !== null && gi.denies(item)) {
+                        return true;
+                    }
                     return exclude.test(item);
                 });
             }));

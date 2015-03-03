@@ -53,6 +53,8 @@ If you find features that would make this package better, or you know better ope
  * 100% Markdown and HTML compatible
  * List structure of the Markdown file
  * List structure of folders
+ * Ignores folders containing .git and .hg
+ * Appreciate .gitignore
  * ~~Gulp and Grunt integration~~
  * ~~Config files~~
  * ~~Source inlinking and quoting~~
