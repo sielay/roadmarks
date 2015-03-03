@@ -265,3 +265,13 @@ describe('.git and .hg ignoring', function (done) {
     });
 
 });
+
+describe('Header links', function() {
+
+    it('Complex links', function() {
+
+        var rm = new RoadMarks();
+        rm.linkize('1.2.3-a Łukasz_testing? header `special characters`;.,links How+they%20 behave').should.eql('123-a-%C5%81ukasz_testing-header-special-characterslinks-howthey20-behave');
+    });
+
+});

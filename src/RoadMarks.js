@@ -579,7 +579,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
         list.forEach(function (item) {
             if (str.length > 0) str += EOL;
-            str += indentStr + '* [' + item.title + '](#' + item.title.toLowerCase().replace(/[^a-z0-9\s\t-]+/g, '').replace(/[\s\t ]+/g, '-') + ')';
+            str += indentStr + '* [' + item.title + '](#' + that.linkize(item.title) + ')';
             if (item.items) {
                 str += EOL + headings(item.items, indent + 1);
             }
@@ -710,6 +710,14 @@ RoadMarks.prototype.debug = function (level, string, value) {
         console.log(doIndent(level) + chalk[color[level] || 'white'](string + ' ' + chalk.yellow(value)));
     }
 };
+
+RoadMarks.prototype.linkize = function(string) {
+    string = string.replace(/[A-Z]+/g,function(v) { return v.toLowerCase(); });
+    string = string.replace(/[^a-z0-9-\s\u00BF-\u1FFF\u2C00-\uD7FF\w]+/g,'');
+    string = string.replace(/[\s\t ]+/g, '-');
+    string = encodeURIComponent(string);
+    return string;
+}
 
 RoadMarks.runner = runner;
 
