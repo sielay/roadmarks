@@ -116,7 +116,7 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
         //this.debug(1, 'RoadMarks.findDocFiles ', rootSearchPath);
         //this.debug(2, 'RoadMarks.findDocFiles - project path ', rootPath);
         //this.debug(2, 'RoadMarks.findDocFiles - excludes ', excludes);
-        this.debug(2, 'RoadMarks.findDocFiles - searchPattern ', searchPath);
+        that.debug(2, 'RoadMarks.findDocFiles - searchPattern ', searchPath);
 
         g = glob(searchPath, function (error, fileList) {
 
