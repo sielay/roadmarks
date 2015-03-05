@@ -621,7 +621,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
     }
 
     if (navLinks.length > 0) {
-        string += navLinks.join(' | ') + EOL;
+        string += navLinks.join(' | ') + EOL + EOL;
     }
 
     //this.debug(2, 'RoadMarks..defaultFormatter#content', JSON.stringify(tag.content, null, 4));
@@ -636,6 +636,10 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
     function files(string, dir, parent, rootdir, indent, cb) {
 
         var keys = Object.keys(dir);
+
+        if(keys && keys.length > 0) {
+            string += '****' + EOL + EOL;
+        }
 
         indent = indent || 0;
 

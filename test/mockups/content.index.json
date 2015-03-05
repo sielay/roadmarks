@@ -26,8 +26,12 @@
         "level": 2
       },
       {
-        "title": "Not ignored",
-        "level": 2
+        "level": 2,
+        "title": "Not ignored 1"
+      },
+      {
+        "level": 2,
+        "title": "Not ignored 2"
       }
     ]
   }

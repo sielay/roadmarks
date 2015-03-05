@@ -44,8 +44,16 @@ RM-IGNORE
         <!-- /RM -->
     <!-- /RM-IGNORE -->
 
-Not ignored
------------
+Not ignored 1
+-------------
+
+<!-- RM-IGNORE -->
+Ignored
+-------
+<!-- /RM-IGNORE -->
+
+Not ignored 2
+-------------
 
 <!-- RM -->
 

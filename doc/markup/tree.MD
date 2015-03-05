@@ -4,6 +4,7 @@ Tree
 <!-- RM -->
 
 [Got to parent](./README.md) | [Got to top](/README.md)
+
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
 
@@ -21,8 +22,11 @@ Tree path
 <!-- RM(tree:./../*) -->
 
 [Got to parent](./README.md) | [Got to top](/README.md)
+
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
+
+****
 
 * [content](./content.MD)
 * [Ignore](./ignore.mD)
@@ -44,8 +48,11 @@ Tree depth
 <!-- RM(depth:1,tree:./../../*) -->
 
 [Got to parent](./README.md) | [Got to top](/README.md)
+
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
+
+****
 
 * [doc](./..)
 * [content](./content.MD)

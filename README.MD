@@ -14,6 +14,7 @@ This documentation (including nested sits in built with `Roadmarks`)
 <!-- RM(tree:*) -->
 
 [Got to parent](./README.md) | [Got to top](/README.md)
+
 * [Why?](#why)
 * [Features](#features)
 * [Installation](#installation)
@@ -23,10 +24,16 @@ This documentation (including nested sits in built with `Roadmarks`)
 * [Credits](#credits)
 * [Licence](#licence)
 
+****
+
 * [doc](./doc)
+****
+
   * [Roadmarks](./doc/INDEX.MD)
   * [Instalation](./doc/installation.md)
   * [README.md](./doc/markup)
+****
+
     * [content](./doc/markup/content.MD)
     * [Ignore](./doc/markup/ignore.mD)
     * [media](./doc/markup/media.md)
