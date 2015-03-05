@@ -256,22 +256,6 @@ RoadMarks.prototype.harvest = function (tokens, filePath) {
     };
 };
 
-RoadMarks.prototype.top = function () {
-
-};
-
-RoadMarks.prototype.parent = function () {
-
-};
-
-RoadMarks.prototype.next = function () {
-
-};
-
-RoadMarks.prototype.previous = function () {
-
-};
-
 /**
  *
  * @param content
@@ -380,7 +364,8 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
                 result += blockData.lines[l] + EOL;
             }
             result = result.substr(0, result.length - EOL.length);
-            return callback(null, result);
+
+            return ghPanels(result, callback);
         }
         chunk = blockData.chunks[i++];
 
@@ -563,6 +548,39 @@ RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
     this.get(absFilePath, gotContent);
 };
 
+function ghPanels(string, callback) {
+
+    var reg = /^\<\!--\s*RM\-PANEL(|\(.*?\))\s*--\>([\s\S]*?)\<\!--\s*\/RM\-PANEL\s*-->/gm,
+        regOne = /^(\<\!--\s*RM-PANEL(|\((.*?)\))\s*--\>)([\s\S]*?)\<\!--\s*\/RM-PANEL\s*-->/,
+        regBody = /(\<\!--\s*RM-PANEL-BODY\s*--\>)([\s\S]*?)\<\!--\s*\/RM-PANEL-BODY\s*-->/,
+        matches = string.match(reg);
+
+    if (!matches ) return callback(null, string);
+
+    matches.forEach(function(match) {
+
+        var elems = match.match(regOne),
+            head = elems[3] || '',
+            subElems = elems[4].match(regBody),
+            content = subElems[2],
+            repl =
+                '<!-- RM-PANEL('+head+')-->' + EOL +
+                '   <div class="boxed-group">' + EOL +
+                '       <h3>' + head + '</h3>' + EOL +
+                '           <div class="markdown-body">' + EOL +
+                '               <!-- RM-PANEL-BODY -->' + EOL +
+                                    content + EOL +
+                '               <!-- /RM-PANEL-BODY -->' + EOL +
+                '           </div>' + EOL +
+                '   </div>' + EOL +
+                '<!-- /RM-PANEL -->';
+        string = string.replace(match, repl);
+    });
+
+    callback(null, string);
+
+}
+
 RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, callback) {
 
     var string = '',
@@ -571,6 +589,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
         basename = path.basename(absPath),
         dirname = path.dirname(absPath),
         that = this;
+
 
     function headings(list, indent) {
         var str = '',

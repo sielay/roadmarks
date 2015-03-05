@@ -89,7 +89,7 @@ roadmarks -f /path/to/my/file.MD
 ### Markup
 
 
-By default comment bloci load 
+By default comment block load
 
 	<!-- RM -->
     <!-- /RM -->
@@ -98,6 +98,19 @@ By default comment bloci load
 	<!-- RM(tree:./**/*) -->
     <!-- /RM -->
     
+<!-- RM-PANEL(New Functionality)-->
+   <div class="boxed-group">
+       <h3>New Functionality</h3>
+           <div class="markdown-body">
+               <!-- RM-PANEL-BODY -->
+
+GitHub.com panels
+               
+               <!-- /RM-PANEL-BODY -->
+           </div>
+   </div>
+<!-- /RM-PANEL -->
+
 ### Rules
 
 I tried to put rules as close to Markdown specifciation and way how GitHub works with Markdown.
