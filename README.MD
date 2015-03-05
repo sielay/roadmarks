@@ -22,9 +22,7 @@ This documentation (including nested sits in built with `Roadmarks`)
   * [Markup](#markup)
   * [Rules](#rules)
 * [Credits](#credits)
-* [Licence](#licence)
-
-****
+* [Licence](#licence)****
 
 * [doc](./doc)
   * [Roadmarks](./doc/INDEX.MD)
@@ -97,19 +95,7 @@ By default comment block load
 	<!-- /RM -->
 	<!-- RM(tree:./**/*) -->
     <!-- /RM -->
-    
-<!-- RM-PANEL(New Functionality)-->
-   <div class="boxed-group">
-       <h3>New Functionality</h3>
-           <div class="markdown-body">
-               <!-- RM-PANEL-BODY -->
 
-GitHub.com panels
-               
-               <!-- /RM-PANEL-BODY -->
-           </div>
-   </div>
-<!-- /RM-PANEL -->
 
 ### Rules
 

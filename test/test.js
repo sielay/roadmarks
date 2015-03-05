@@ -140,7 +140,7 @@ describe('Process file', function () {
             cb(null, 'TAG-CONTENT');
         }, function (error, blockData) {
             should.not.exist(error);
-            fs.writeFileSync(__dirname + '/mockups/parse.emde', blockData, 'utf8');
+            //fs.writeFileSync(__dirname + '/mockups/parse.emde', blockData, 'utf8');
             blockData.should.eql(fs.readFileSync(__dirname + '/mockups/parse.emde', 'utf8'));
             // we don't test blockData as it's dynamic
             //fs.writeFileSync(__dirname + '/mockups/tags.ignore.json', JSON.stringify(actual,null,4),'utf8');

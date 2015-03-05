@@ -7,8 +7,7 @@ Tree
 
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
-
-
+* [Just tree](#just-tree)
 <!-- /RM -->
 
 Tree path
@@ -25,8 +24,7 @@ Tree path
 
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
-
-****
+* [Just tree](#just-tree)****
 
 * [content](./content.MD)
 * [Ignore](./ignore.mD)
@@ -51,8 +49,24 @@ Tree depth
 
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
+* [Just tree](#just-tree)****
 
-****
+* [doc](./..)
+* [content](./content.MD)
+* [Ignore](./ignore.mD)
+* [media](./media.md)
+* [paging](./paging.md)
+* [snippets](./snippets.md)
+* [Tree](./tree.MD)
+
+<!-- /RM -->
+
+Just tree
+---------
+
+<!-- RM(depth:1,tree:./../../*,nocontent) -->
+
+[Got to parent](./README.md) | [Got to top](/README.md)
 
 * [doc](./..)
 * [content](./content.MD)
