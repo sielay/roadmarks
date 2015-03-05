@@ -27,13 +27,9 @@ This documentation (including nested sits in built with `Roadmarks`)
 ****
 
 * [doc](./doc)
-****
-
   * [Roadmarks](./doc/INDEX.MD)
   * [Instalation](./doc/installation.md)
   * [README.md](./doc/markup)
-****
-
     * [content](./doc/markup/content.MD)
     * [Ignore](./doc/markup/ignore.mD)
     * [media](./doc/markup/media.md)

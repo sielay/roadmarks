@@ -637,7 +637,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
         var keys = Object.keys(dir);
 
-        if(keys && keys.length > 0) {
+        if(keys && keys.length > 0 && indent === 0 ) {
             string += '****' + EOL + EOL;
         }
 
