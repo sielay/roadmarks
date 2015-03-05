@@ -4,6 +4,7 @@ Ignore
 <!-- RM -->
 
 TAG-CONTENT
+
 <!-- /RM -->
 
 Git flavored code blocks
@@ -58,9 +59,11 @@ Not ignored 2
 <!-- RM -->
 
 TAG-CONTENT
+
 <!-- /RM -->
 
 <!-- RM(depth:1) -->
 
 TAG-CONTENT
+
 <!-- /RM -->

@@ -417,7 +417,7 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
 
                     //that.debug(3, 'Replaced ', tag.__original[0]);
 
-                    var replacement = tag.__original[1] + EOL + EOL + snippet + EOL + '<!-- /RM -->';
+                    var replacement = tag.__original[1] + EOL + EOL + snippet + EOL + EOL + '<!-- /RM -->';
                     stack = stack.replace(tag.__original[0], replacement);
 
                 }
@@ -624,7 +624,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
         var keys = Object.keys(dir);
 
         if(keys && keys.length > 0 && indent === 0 && (tag.content && tag.content.items)) {
-            string += '****' + EOL + EOL;
+            string += EOL + '****' + EOL + EOL;
         }
 
         indent = indent || 0;
