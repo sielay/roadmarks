@@ -37,6 +37,7 @@ This documentation (including nested sits in built with `Roadmarks`)
     * [Tree](./doc/markup/tree.MD)
 
 
+
 <!-- /RM -->
 
 Why?
@@ -123,6 +124,7 @@ Now you can create indexes
     * [Tree](./doc/markup/tree.MD)
 
 
+
 <!-- /RM -->
 
     <!-- RM(definitions,images,tree:*,nocontent,noparent,notop,table) -->
@@ -130,32 +132,33 @@ Now you can create indexes
 
 <!-- RM(list-definitions,tree:*,nofiles,nocontent,noparent,notop,table) -->
 
- Type | Resource | Page 
-===== | ======== | ============ 
- Definition | indexable | [paging](doc/markup/paging.md) 
- Definition | indexed | [paging](doc/markup/paging.md) 
- Definition | indexable | [Tree](doc/markup/tree.MD) 
+ Name | Page 
+===== | ============ 
+ indexable | [paging](doc/markup/paging.md), [Tree](doc/markup/tree.MD) 
+ indexed | [paging](doc/markup/paging.md) 
+
 
 
 <!-- /RM -->
 
     <!-- RM(images,tree:*,nocontent,noparent,notop,table) -->
-    <!-- /rM -->
+    <!-- /RM -->
 
 <!-- RM(images,tree:*,nocontent,noparent,notop,table) -->
 
- Type | Resource | Page 
-===== | ======== | ============ 
- Page | doc | [doc](doc) 
- Page | Roadmarks | [INDEX.MD](doc/INDEX.MD) 
- Page | Instalation | [installation.md](doc/installation.md) 
- Page | README.md | [markup](doc/markup) 
- Page | content | [content.MD](doc/markup/content.MD) 
- Page | Ignore | [ignore.mD](doc/markup/ignore.mD) 
- Page | media | [media.md](doc/markup/media.md) 
- Page | paging | [paging.md](doc/markup/paging.md) 
- Page | snippets | [snippets.md](doc/markup/snippets.md) 
- Page | Tree | [tree.MD](doc/markup/tree.MD) 
+ Name | Page 
+===== | ============ 
+ Ignore | [ignore.mD](doc/markup/ignore.mD) 
+ Instalation | [installation.md](doc/installation.md) 
+ README.md | [markup](doc/markup) 
+ Roadmarks | [INDEX.MD](doc/INDEX.MD) 
+ Tree | [tree.MD](doc/markup/tree.MD) 
+ content | [content.MD](doc/markup/content.MD) 
+ doc | [doc](doc) 
+ media | [media.md](doc/markup/media.md) 
+ paging | [paging.md](doc/markup/paging.md) 
+ snippets | [snippets.md](doc/markup/snippets.md) 
+
 
 
 <!-- /RM -->

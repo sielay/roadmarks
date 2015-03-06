@@ -622,11 +622,13 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
         relation = path.relative(projectAbsPath, absPath),
         basename = path.basename(absPath),
         dirname = path.dirname(absPath),
-        that = this;
+        that = this,
+        rows = {};
+
 
     if (tag.table) {
-        string += ' Type | Resource | Page ' + EOL;
-        string += '===== | ======== | ============ ' + EOL;
+        string += ' Name | Page ' + EOL;
+        string += '===== | ============ ' + EOL;
     }
 
     function headings(list, indent) {
@@ -643,6 +645,21 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
             }
         });
         return str;
+    }
+
+    function tableCheck(error, string) {
+        if(error) return callback(error);
+        if(tag.table) {
+            var definitions = Object.keys(rows);
+            definitions.sort();
+            definitions.forEach(function(row){
+                string += ' ' + row + ' | ' + rows[row].join(', ') + ' ' + EOL;
+            });
+        }
+        string += EOL;
+
+        callback(error, string);
+
     }
 
     //this.debug(2, 'RoadMarks..defaultFormatter#noparent', tag.noparent);
@@ -732,7 +749,8 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
                     if (tag.table) {
 
-                        string += ' Page | ' + title + ' | [' + path.basename(fullPath) + '](' + path.relative(rootdir, fullPath) + ') ' + EOL;
+                        if(!rows[title]) rows[title] = [];
+                        rows[title].push('[' + path.basename(fullPath) + '](' + path.relative(rootdir, fullPath) + ')');
 
                     } else {
 
@@ -752,7 +770,8 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
                         if (tag.table) {
 
-                            string += ' Image | ' + image + ' | [' + title + '](' + directPath + ') ' + EOL;
+                            if(!rows[image]) rows[image] = [];
+                            rows[image].push('[' + title + '](' + directPath + ')');
 
                         } else {
 
@@ -772,7 +791,8 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
                         if (tag.table) {
 
-                            string += ' Definition | ' + definition + ' | [' + title + '](' + directPath + ') ' + EOL;
+                            if(!rows[definition]) rows[definition] = [];
+                            rows[definition].push('[' + title + '](' + directPath + ')');
 
                         } else {
 
@@ -804,11 +824,11 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
             this.debug(1, 'tree', path.resolve(dirname + tag.tree.replace(/(^\.|\*)/g, '')));
         }
-        files(string, tag.files, dirname, dirname, 0, callback);
+        files(string, tag.files, dirname, dirname, 0, tableCheck);
         return;
     }
 
-    callback(null, string);
+    tableCheck(null, string);
 };
 
 function doIndent(i) {
