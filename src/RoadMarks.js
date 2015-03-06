@@ -466,6 +466,9 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
                 match[3].split(',').forEach(function (one) {
                     var kv = one.split(':');
                     params[kv[0]] = kv[1] || true;
+                    if(params[kv[0]] === 'false') {
+                        params[kv[0]] = false;
+                    }
                 });
             }
             that.debug(1, 'tag params', JSON.stringify(params, null, 4));
