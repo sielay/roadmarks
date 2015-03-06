@@ -132,8 +132,8 @@ Now you can create indexes
 
 <!-- RM(list-definitions,tree:*,nofiles,nocontent,noparent,notop,table) -->
 
- Name | Page 
-===== | ============ 
+Name | Page          
+---- | ------------- 
  indexable | [paging](doc/markup/paging.md), [Tree](doc/markup/tree.MD) 
  indexed | [paging](doc/markup/paging.md) 
 
@@ -146,8 +146,8 @@ Now you can create indexes
 
 <!-- RM(images,tree:*,nocontent,noparent,notop,table) -->
 
- Name | Page 
-===== | ============ 
+Name | Page          
+---- | ------------- 
  Ignore | [ignore.mD](doc/markup/ignore.mD) 
  Instalation | [installation.md](doc/installation.md) 
  README.md | [markup](doc/markup) 

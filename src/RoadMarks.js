@@ -627,8 +627,8 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
 
     if (tag.table) {
-        string += ' Name | Page ' + EOL;
-        string += '===== | ============ ' + EOL;
+        string += 'Name | Page          ' + EOL;
+        string += '---- | ------------- ' + EOL;
     }
 
     function headings(list, indent) {
