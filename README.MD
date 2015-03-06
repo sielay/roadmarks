@@ -22,7 +22,8 @@ This documentation (including nested sits in built with `Roadmarks`)
   * [Markup](#markup)
   * [Rules](#rules)
 * [Credits](#credits)
-* [Licence](#licence)****
+* [Licence](#licence)
+****
 
 * [doc](./doc)
   * [Roadmarks](./doc/INDEX.MD)
@@ -34,6 +35,7 @@ This documentation (including nested sits in built with `Roadmarks`)
     * [paging](./doc/markup/paging.md)
     * [snippets](./doc/markup/snippets.md)
     * [Tree](./doc/markup/tree.MD)
+
 
 <!-- /RM -->
 
@@ -93,9 +95,70 @@ By default comment block load
     <!-- /RM -->
 	<!-- RM(max-depth:3)-->
 	<!-- /RM -->
-	<!-- RM(tree:./**/*) -->
+	<!-- RM(tree:/) -->
     <!-- /RM -->
 
+You can use ignore blocks
+
+    <!-- RM-IGNORE -->
+    <!-- /RM-IGNORE -->
+
+Now you can create indexes
+
+    <!-- RM(images,tree:*,nocontent,noparent,notop) -->
+    <!-- /RM  -->
+
+<!-- RM(tree:*,list-images,nocontent,noparent,notop) -->
+
+* [doc](./doc)
+  * [Roadmarks](./doc/INDEX.MD)
+  * [Instalation](./doc/installation.md)
+  * [README.md](./doc/markup)
+    * [content](./doc/markup/content.MD)
+    * [Ignore](./doc/markup/ignore.mD)
+    * [media](./doc/markup/media.md)
+      * Image: [Cookies](./doc/markup/media.md)
+    * [paging](./doc/markup/paging.md)
+    * [snippets](./doc/markup/snippets.md)
+    * [Tree](./doc/markup/tree.MD)
+
+
+<!-- /RM -->
+
+    <!-- RM(definitions,images,tree:*,nocontent,noparent,notop,table) -->
+    <!-- /RM  -->
+
+<!-- RM(list-definitions,tree:*,nofiles,nocontent,noparent,notop,table) -->
+
+ Type | Resource | Page 
+===== | ======== | ============ 
+ Definition | indexable | [paging](doc/markup/paging.md) 
+ Definition | indexed | [paging](doc/markup/paging.md) 
+ Definition | indexable | [Tree](doc/markup/tree.MD) 
+
+
+<!-- /RM -->
+
+    <!-- RM(images,tree:*,nocontent,noparent,notop,table) -->
+    <!-- /rM -->
+
+<!-- RM(images,tree:*,nocontent,noparent,notop,table) -->
+
+ Type | Resource | Page 
+===== | ======== | ============ 
+ Page | doc | [doc](doc) 
+ Page | Roadmarks | [INDEX.MD](doc/INDEX.MD) 
+ Page | Instalation | [installation.md](doc/installation.md) 
+ Page | README.md | [markup](doc/markup) 
+ Page | content | [content.MD](doc/markup/content.MD) 
+ Page | Ignore | [ignore.mD](doc/markup/ignore.mD) 
+ Page | media | [media.md](doc/markup/media.md) 
+ Page | paging | [paging.md](doc/markup/paging.md) 
+ Page | snippets | [snippets.md](doc/markup/snippets.md) 
+ Page | Tree | [tree.MD](doc/markup/tree.MD) 
+
+
+<!-- /RM -->
 
 ### Rules
 

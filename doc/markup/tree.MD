@@ -8,6 +8,7 @@ Tree
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
 * [Just tree](#just-tree)
+
 <!-- /RM -->
 
 Tree path
@@ -24,7 +25,8 @@ Tree path
 
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
-* [Just tree](#just-tree)****
+* [Just tree](#just-tree)
+****
 
 * [content](./content.MD)
 * [Ignore](./ignore.mD)
@@ -32,6 +34,7 @@ Tree path
 * [paging](./paging.md)
 * [snippets](./snippets.md)
 * [Tree](./tree.MD)
+
 
 <!-- /RM -->
 
@@ -49,7 +52,8 @@ Tree depth
 
 * [Tree path](#tree-path)
 * [Tree depth](#tree-depth)
-* [Just tree](#just-tree)****
+* [Just tree](#just-tree)
+****
 
 * [doc](./..)
 * [content](./content.MD)
@@ -59,10 +63,13 @@ Tree depth
 * [snippets](./snippets.md)
 * [Tree](./tree.MD)
 
+
 <!-- /RM -->
 
 Just tree
 ---------
+
+Some terms can be __indexable__ or just **bold**.
 
 <!-- RM(depth:1,tree:./../../*,nocontent) -->
 
@@ -75,5 +82,6 @@ Just tree
 * [paging](./paging.md)
 * [snippets](./snippets.md)
 * [Tree](./tree.MD)
+
 
 <!-- /RM -->

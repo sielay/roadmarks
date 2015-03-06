@@ -11,6 +11,7 @@ Ignore
 * [RM-IGNORE](#rm-ignore)
 * [Not ignored 1](#not-ignored-1)
 * [Not ignored 2](#not-ignored-2)
+
 <!-- /RM -->
 
 Git flavored code blocks
@@ -72,6 +73,7 @@ Not ignored 2
 * [RM-IGNORE](#rm-ignore)
 * [Not ignored 1](#not-ignored-1)
 * [Not ignored 2](#not-ignored-2)
+
 <!-- /RM -->
 
 <!-- RM(depth:1) -->
@@ -84,4 +86,5 @@ Not ignored 2
 * [RM-IGNORE](#rm-ignore)
 * [Not ignored 1](#not-ignored-1)
 * [Not ignored 2](#not-ignored-2)
+
 <!-- /RM -->

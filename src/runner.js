@@ -15,8 +15,7 @@ module.exports = function (options) {
         var file = path.resolve(file);
 
         console.log(chalk.blue('Processing file ') + chalk.yellow(file));
-
-        fs.readFile(file, 'utf8', function (error, content) {
+        rm.content(file, function (error, content) {
             if (error) {
                 console.log(chalk.red(error));
                 return callback();

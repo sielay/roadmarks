@@ -11,7 +11,7 @@ var fs        = require('fs'),
     eachAsync = require('each-async'),
     _         = require('lodash'),
     runner    = require('./runner'),
-    giParser = require('gitignore-parser');
+    giParser  = require('gitignore-parser');
 
 /**
  * @class
@@ -32,7 +32,8 @@ function RoadMarks(config) {
                 noparent  : false
             },
         contentRepo = {},
-        fileRepo = {};
+        fileRepo = {},
+        blockRepo = {};
 
     this.verbose = (config && config.verbose) || false;
 
@@ -78,6 +79,34 @@ function RoadMarks(config) {
 
     this.getDefaultOptions = function () {
         return defaultOptions;
+    };
+
+    this.getBlockSync = function (path) {
+        return blockRepo[path];
+    };
+
+    this.setBlock = function (path, blocks) {
+        return blockRepo[path] = blocks;
+    };
+
+    var fileContentCache = {};
+
+    this.content = function (path, callback) {
+        this.debug(2, 'Content load', path);
+        if (fileContentCache[path]) {
+            return callback(null, fileContentCache[path]);
+        }
+        fs.readFile(path, 'utf8', function (error, content) {
+            if (error) {
+                return callback(error);
+            }
+            fileContentCache[path] = content;
+            callback(null, content);
+        });
+    };
+
+    this.report = function () {
+        return Object.keys(fileContentCache).length;
     }
 }
 
@@ -96,11 +125,12 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
         excludes.push(/README\.md$/);
     }
 
-    if(fs.existsSync(rootSearchPath + '/.gitignore')) {
-        gi = giParser.compile(fs.readFileSync(rootSearchPath+'/.gitignore', 'utf8'));
-    };
+    if (fs.existsSync(rootSearchPath + '/.gitignore')) {
+        gi = giParser.compile(fs.readFileSync(rootSearchPath + '/.gitignore', 'utf8'));
+    }
+    ;
 
-    g = glob(rootSearchPath + '/**/.+(git|hg)', {dot:true,nodir:false}, function(error, dirList) {
+    g = glob(rootSearchPath + '/**/.+(git|hg)', {dot: true, nodir: false}, function (error, dirList) {
         if (error) {
             if (error.code !== 'EACCESS') {
                 return callback(error);
@@ -109,7 +139,7 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
         }
         dirList.forEach(function (dir) {
             var dirPath = path.relative(rootPath, path.dirname(dir));
-            if (dirPath !== ''  ) {
+            if (dirPath !== '') {
                 excludes.push(new RegExp('^' + dirPath));
             }
         });
@@ -133,7 +163,7 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
 
             callback(null, fileList.filter(function (item) {
                 return !excludes.some(function (exclude) {
-                    if(gi !== null && gi.denies(item)) {
+                    if (gi !== null && gi.denies(item)) {
                         return true;
                     }
                     return exclude.test(item);
@@ -198,12 +228,38 @@ RoadMarks.prototype.getFiles = function (absPath, rootPath, callback) {
  * @param callback
  */
 RoadMarks.prototype.fetch = function (absPath, callback) {
-    var that = this;
-    fs.readFile(absPath, 'utf8', function (error, content) {
+    var that = this,
+        crop,
+        regDefinitions = /__(.+?)__/g,
+        regDefinition = /__(.+?)__/,
+        regImages = /\!\[.+?\]\(.+?\)/g,
+        regImage = /\!\[(.+?)\]\((.+?)\)/,
+        images = [],
+        definitions = [],
+        matches,
+        match;
+    this.content(absPath, function (error, content) {
         if (error) {
             return callback(error, null);
         }
-        that.set(absPath, that.harvest(lexer(content), absPath));
+        crop = that.harvest(lexer(content), absPath);
+        matches = content.match(regDefinitions);
+        if (matches) {
+            matches.forEach(function (definition) {
+                match = definition.match(regDefinition);
+                definitions.push(match[1]);
+            });
+            crop.definitions = definitions;
+        }
+        matches = content.match(regImages);
+        if (matches) {
+            matches.forEach(function (image) {
+                match = image.match(regImage);
+                images.push(match[1].length > 0 ? match[1] : match[2]);
+            });
+            crop.images = images;
+        }
+        that.set(absPath, crop);
         callback(null, that.getSync(absPath));
     });
 };
@@ -213,7 +269,7 @@ RoadMarks.prototype.fetch = function (absPath, callback) {
  * @param tokens
  */
 RoadMarks.prototype.harvest = function (tokens, filePath) {
-    var title = path.basename(filePath).replace(/\.(md)$/i,''),
+    var title = path.basename(filePath).replace(/\.(md)$/i, ''),
         bundle = [],
         ignore = false,
         ignoreOpen = /\<\!--\s*RM-IGNORE\s*--\>/,
@@ -261,7 +317,13 @@ RoadMarks.prototype.harvest = function (tokens, filePath) {
  * @param content
  * @returns {Array}
  */
-function getBlocks(content) {
+function getBlocks(content, path) {
+
+    var cache = this.getBlockSync(path);
+    if (cache) {
+        return cache;
+    }
+
     var chunks = [],
         current = null,
         codeBlockTag = /^(\s{0,3})```/,
@@ -320,10 +382,11 @@ function getBlocks(content) {
     if (current && current.length > 0) {
         chunks.push(current);
     }
-    return {
+
+    return this.setBlock(path, {
         chunks: chunks,
         lines : lines
-    };
+    });
 }
 
 /**
@@ -338,9 +401,9 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
 
     this.debug(1, 'RoadMarks.parse', absFilePath);
 
-    var reg = /^\<\!--\s*RM(|\(.*?\))\s*--\>([\s\S]*?)\<\!--\s*\/RM\s*-->/gm,
-        regOne = /^(\<\!--\s*RM(|\((.*?)\))\s*--\>)([\s\S]*?)\<\!--\s*\/RM\s*-->/,
-        blockData = getBlocks.apply(this, [content]),
+    var regTags = /^\<\!--\s*RM(|\(.*?\))\s*--\>([\s\S]*?)\<\!--\s*\/RM\s*-->/gm,
+        regOneTag = /^(\<\!--\s*RM(|\((.*?)\))\s*--\>)([\s\S]*?)\<\!--\s*\/RM\s*-->/,
+        blockData = getBlocks.apply(this, [content, absFilePath]),
         matches,
         tag,
         match,
@@ -369,9 +432,9 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
         }
         chunk = blockData.chunks[i++];
 
-        if(chunk === null) {
+        if (chunk === null) {
             console.error(chalk.red('There was an issue with chunk at index ' + i + '. Skipping chunk.'));
-            console.error(chalk.red(JSON.stringify(blockData,null,4)));
+            console.error(chalk.red(JSON.stringify(blockData, null, 4)));
             return iterate();
         }
 
@@ -380,7 +443,8 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
 
 
         section = blockData.lines.slice(chunk[0], chunk[1] + 1).join(EOL);
-        matches = section.match(reg);
+
+        matches = section.match(regTags);
         if (matches) {
             j = 0;
             return iterate2();
@@ -404,9 +468,10 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
                     params[kv[0]] = kv[1] || true;
                 });
             }
+            that.debug(1, 'tag params', JSON.stringify(params, null, 4));
             params.__original = [match[0], match[1]];
             return params;
-        })(match.match(regOne));
+        })(match.match(regOneTag));
 
         processor(tag, absFilePath, function (error, tag) {
             if (error) throw error;
@@ -468,10 +533,12 @@ function limitContentDepth(depth, elem) {
 
 
 RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
+
     var that = this,
         fileName = path.basename(absFilePath),
-        _defaults = _.clone(this.getDefaultOptions()),
-        tag = _.extend(_defaults, tag);
+        _defaults = _.clone(this.getDefaultOptions());
+
+    tag = _.extend(_defaults, tag);
 
     //this.debug(1, 'RoadMarks.process ', absFilePath);
     //this.debug(2, JSON.stringify(tag, null, 3), '');
@@ -531,8 +598,8 @@ RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
         var thisDir = (fs.lstatSync(absFilePath).isDirectory() ? absFilePath : path.dirname(absFilePath));
         var searchPath = thisDir + '/' + tag.tree;
 
-        that.debug(2,'searchpath',searchPath);
-        that.debug(2,'rootPath',thisDir);
+        that.debug(2, 'searchpath', searchPath);
+        that.debug(2, 'rootPath', thisDir);
 
         that.getFiles(
             searchPath,
@@ -557,6 +624,10 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
         dirname = path.dirname(absPath),
         that = this;
 
+    if (tag.table) {
+        string += ' Type | Resource | Page ' + EOL;
+        string += '===== | ======== | ============ ' + EOL;
+    }
 
     function headings(list, indent) {
         var str = '',
@@ -566,6 +637,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
         list.forEach(function (item) {
             if (str.length > 0) str += EOL;
             str += indentStr + '* [' + item.title + '](#' + that.linkize(item.title) + ')';
+
             if (item.items) {
                 str += EOL + headings(item.items, indent + 1);
             }
@@ -617,13 +689,13 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
         //this.debug(3, 'RoadMarks..defaultFormatter#content#heads', heads);
     }
 
-    this.debug(1,'tree',JSON.stringify(tag.files,null,4));
+    this.debug(1, 'tree', JSON.stringify(tag.files, null, 4));
 
     function files(string, dir, parent, rootdir, indent, cb) {
 
         var keys = Object.keys(dir);
 
-        if(keys && keys.length > 0 && indent === 0 && (tag.content && tag.content.items)) {
+        if (keys && keys.length > 0 && indent === 0 && (tag.content && tag.content.items)) {
             string += EOL + '****' + EOL + EOL;
         }
 
@@ -640,30 +712,84 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
                 isDir = fs.lstatSync(fullPath).isDirectory();
 
 
-            if(isDir) {
-                if(fs.existsSync(fullPath + '/README.md')) {
+            if (isDir) {
+                if (fs.existsSync(fullPath + '/README.md')) {
                     indexPath = fullPath + '/README.md';
                 }
             }
 
-            that.debug(1,'fp',fullPath);
+            that.debug(1, 'fp', fullPath);
 
-            that.debug(2,'fullPath',fullPath);
-            that.debug(2,'indexPath',indexPath);
+            that.debug(2, 'fullPath', fullPath);
+            that.debug(2, 'indexPath', indexPath);
 
-            that.get(indexPath, function (error, tag) {
+            that.get(indexPath, function (error, fileTag) {
 
-                string += doIndent(indent) + '* [';
-                string += (tag && tag.title && !(isDir && tag.title === 'README')) ? tag.title : (key !== '..') ? key : path.basename(fullPath);
-                string += '](./';
-                string += path.relative(rootdir,fullPath);
-                string += ')' + EOL;
+                var title = (fileTag && fileTag.title && !(isDir && fileTag.title === 'README')) ? fileTag.title : (key !== '..') ? key : path.basename(fullPath);
+                var directPath = path.relative(rootdir, fullPath);
 
+                if (!tag.nofiles) {
 
-                if(dir[key] !== true) {
+                    if (tag.table) {
+
+                        string += ' Page | ' + title + ' | [' + path.basename(fullPath) + '](' + path.relative(rootdir, fullPath) + ') ' + EOL;
+
+                    } else {
+
+                        string += doIndent(indent) + '* [';
+                        string += title;
+                        string += '](./';
+                        string += directPath;
+                        string += ')' + EOL;
+
+                    }
+
+                }
+
+                if (tag['list-images'] && fileTag.images) {
+
+                    fileTag.images.forEach(function (image) {
+
+                        if (tag.table) {
+
+                            string += ' Image | ' + image + ' | [' + title + '](' + directPath + ') ' + EOL;
+
+                        } else {
+
+                            string += doIndent(indent + 1) + '* Image: [';
+                            string += image;
+                            string += '](./';
+                            string += path.relative(rootdir, fullPath);
+                            string += ')' + EOL;
+
+                        }
+                    });
+                }
+
+                if (tag['list-definitions'] && fileTag.definitions) {
+
+                    fileTag.definitions.forEach(function (definition) {
+
+                        if (tag.table) {
+
+                            string += ' Definition | ' + definition + ' | [' + title + '](' + directPath + ') ' + EOL;
+
+                        } else {
+
+                            string += doIndent(indent + 1) + '* Definition: [';
+                            string += definition;
+                            string += '](./';
+                            string += path.relative(rootdir, fullPath);
+                            string += ')' + EOL;
+
+                        }
+                    });
+                }
+
+                if (dir[key] !== true) {
                     return files(string, dir[key], fullPath, rootdir, indent + 1, iterate);
                 }
-                iterate(null,string);
+                iterate(null, string);
             });
         }
 
@@ -673,10 +799,10 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
     if (tag.files) {
 
 
-        this.debug(1,'dirname', dirname);
-        if(tag.tree !== false) {
+        this.debug(1, 'dirname', dirname);
+        if (tag.tree !== false) {
 
-            this.debug(1, 'tree', path.resolve(dirname+tag.tree.replace(/(^\.|\*)/g, '')));
+            this.debug(1, 'tree', path.resolve(dirname + tag.tree.replace(/(^\.|\*)/g, '')));
         }
         files(string, tag.files, dirname, dirname, 0, callback);
         return;
@@ -701,13 +827,16 @@ RoadMarks.prototype.debug = function (level, string, value) {
     }
 };
 
-RoadMarks.prototype.linkize = function(string) {
-    string = string.replace(/[A-Z]+/g,function(v) { return v.toLowerCase(); });
-    string = string.replace(/[^a-z0-9-\s\u00BF-\u1FFF\u2C00-\uD7FF\w]+/g,'');
+RoadMarks.prototype.linkize = function (string) {
+    string = string.replace(/[A-Z]+/g, function (v) {
+        return v.toLowerCase();
+    });
+    string = string.replace(/[^a-z0-9-\s\u00BF-\u1FFF\u2C00-\uD7FF\w]+/g, '');
     string = string.replace(/[\s\t ]+/g, '-');
     string = encodeURIComponent(string);
     return string;
-}
+};
+
 
 RoadMarks.runner = runner;
 
