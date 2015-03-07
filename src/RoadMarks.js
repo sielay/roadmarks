@@ -572,6 +572,8 @@ RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
         if (tree) {
 
             siblings = flat(tree);
+            idx = siblings.indexOf(path.basename(path.dirname(absFilePath)));
+            if(idx >= 0) siblings.splice(idx,1);
             siblings.sort();
             idx = siblings.indexOf(fileName);
             if (idx > 0) tag.previous = siblings[idx - 1];
