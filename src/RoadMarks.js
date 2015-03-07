@@ -143,7 +143,7 @@ RoadMarks.prototype.findDocFiles = function (rootSearchPath, rootPath, allowRead
                 excludes.push(new RegExp('^' + dirPath));
             }
         });
-        //this.debug(1, 'RoadMarks.findDocFiles ', rootSearchPath);
+        that.debug(1, 'RoadMarks.findDocFiles ', rootSearchPath);
         //this.debug(2, 'RoadMarks.findDocFiles - project path ', rootPath);
         //this.debug(2, 'RoadMarks.findDocFiles - excludes ', excludes);
         that.debug(2, 'RoadMarks.findDocFiles - searchPattern ', searchPath);
@@ -205,7 +205,7 @@ RoadMarks.prototype.get = function (absPath, callback) {
 };
 
 RoadMarks.prototype.getFiles = function (absPath, rootPath, callback) {
-    //this.debug(1, 'RoadMarks.getFiles', absPath);
+    this.debug(1, 'RoadMarks.getFiles', absPath);
     var cache = this.getFilesSync(absPath), that = this;
     if (cache) {
         return callback(null, cache);
@@ -534,6 +534,23 @@ function limitContentDepth(depth, elem) {
     return copy;
 }
 
+function flat(object, arr) {
+
+    if(!arr) arr = [];
+
+    if(object === true) {
+        return arr;
+    }
+    var keys = Object.keys(object);
+
+    keys.forEach(function(key){
+        arr.push(key);
+        flat(object[key],arr);
+    });
+
+    return arr;
+}
+
 
 RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
 
@@ -553,11 +570,13 @@ RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
         if (error) throw error;
 
         if (tree) {
-            siblings = Object.keys(tree);
+
+            siblings = flat(tree);
             siblings.sort();
             idx = siblings.indexOf(fileName);
             if (idx > 0) tag.previous = siblings[idx - 1];
             if (idx < siblings.length - 1) tag.next = siblings[idx + 1];
+
         }
         //that.debug(3, JSON.stringify(tag, null, 3), '');
         callback(null, tag);
@@ -573,8 +592,8 @@ RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
             return gotSiblings(null, null);
         }
 
-        //that.debug(2, 'Get siblings');
-        //that.debug(3, 'gotTree for abs file path', absFilePath);
+        that.debug(2, 'Get siblings');
+        that.debug(3, 'gotTree for abs file path', absFilePath);
 
         that.getFiles(
             path.dirname(absFilePath),

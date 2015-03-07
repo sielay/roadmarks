@@ -140,10 +140,10 @@ describe('Process file', function () {
             cb(null, 'TAG-CONTENT');
         }, function (error, blockData) {
             should.not.exist(error);
-            //fs.writeFileSync(__dirname + '/mockups/parse.emde', blockData, 'utf8');
+            fs.writeFileSync(__dirname + '/mockups/parse.emde', blockData, 'utf8');
             blockData.should.eql(fs.readFileSync(__dirname + '/mockups/parse.emde', 'utf8'));
             // we don't test blockData as it's dynamic
-            //fs.writeFileSync(__dirname + '/mockups/tags.ignore.json', JSON.stringify(actual,null,4),'utf8');
+            fs.writeFileSync(__dirname + '/mockups/tags.ignore.json', JSON.stringify(actual,null,4),'utf8');
             actual.should.eql(jsonMock('tags.ignore'));
             done();
 
@@ -195,12 +195,12 @@ describe('Formatter', function () {
         var rm = new RoadMarks();
         rm.defaultFormatter(jsonMock('content.index'), IGNORE_PATH, PROJECT_PATH, function (error, lines) {
 
-            //fs.writeFileSync(__dirname + '/mockups/flat.emde', lines, 'utf8');
+            fs.writeFileSync(__dirname + '/mockups/flat.emde', lines, 'utf8');
             lines.should.eql(fs.readFileSync(__dirname + '/mockups/flat.emde', 'utf8'));
 
             rm.process({}, README_PATH, PROJECT_PATH, function (error, tag) {
                 rm.defaultFormatter(tag, README_PATH, PROJECT_PATH, function (error, lines) {
-                    //fs.writeFileSync(__dirname + '/mockups/tree.emde', lines, 'utf8');
+                    fs.writeFileSync(__dirname + '/mockups/tree.emde', lines, 'utf8');
                     lines.should.eql(fs.readFileSync(__dirname + '/mockups/tree.emde', 'utf8'));
                     done();
                 });
@@ -212,12 +212,12 @@ describe('Formatter', function () {
         var rm = new RoadMarks();
         rm.process({}, INSTALLATION_PATH, PROJECT_PATH, function (error, tag) {
             rm.defaultFormatter(tag, INSTALLATION_PATH, PROJECT_PATH, function (error, lines) {
-                //fs.writeFileSync(__dirname + '/mockups/install.toc.emde', lines, 'utf8');
+                fs.writeFileSync(__dirname + '/mockups/install.toc.emde', lines, 'utf8');
                 lines.should.eql(fs.readFileSync(__dirname + '/mockups/install.toc.emde', 'utf8'));
 
                 rm.process({nosiblings: false}, README2_PATH, DOC_PATH, function (error, tag) {
                     rm.defaultFormatter(tag, README2_PATH, PROJECT_PATH, function (error, lines) {
-                        //fs.writeFileSync(__dirname + '/mockups/readme2.toc.emde', lines, 'utf8');
+                        fs.writeFileSync(__dirname + '/mockups/readme2.toc.emde', lines, 'utf8');
                         lines.should.eql(fs.readFileSync(__dirname + '/mockups/readme2.toc.emde', 'utf8'));
                         done();
                     });
