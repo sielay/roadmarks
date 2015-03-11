@@ -26,15 +26,15 @@ This documentation (including nested sits in built with `Roadmarks`)
 ****
 
 * [doc](./doc)
-  * [Roadmarks](./doc/INDEX.MD)
   * [Instalation](./doc/installation.md)
   * [README.md](./doc/markup)
-    * [content](./doc/markup/content.MD)
     * [Ignore](./doc/markup/ignore.mD)
+    * [Tree](./doc/markup/tree.MD)
+    * [content](./doc/markup/content.MD)
     * [media](./doc/markup/media.md)
     * [paging](./doc/markup/paging.md)
     * [snippets](./doc/markup/snippets.md)
-    * [Tree](./doc/markup/tree.MD)
+  * [Roadmarks](./doc/INDEX.MD)
 
 
 
@@ -112,16 +112,16 @@ Now you can create indexes
 <!-- RM(tree:*,list-images,nocontent,noparent,notop) -->
 
 * [doc](./doc)
-  * [Roadmarks](./doc/INDEX.MD)
   * [Instalation](./doc/installation.md)
   * [README.md](./doc/markup)
-    * [content](./doc/markup/content.MD)
     * [Ignore](./doc/markup/ignore.mD)
+    * [Tree](./doc/markup/tree.MD)
+    * [content](./doc/markup/content.MD)
     * [media](./doc/markup/media.md)
       * Image: [Cookies](./doc/markup/media.md)
     * [paging](./doc/markup/paging.md)
     * [snippets](./doc/markup/snippets.md)
-    * [Tree](./doc/markup/tree.MD)
+  * [Roadmarks](./doc/INDEX.MD)
 
 
 
@@ -134,7 +134,7 @@ Now you can create indexes
 
 Name | Page          
 ---- | ------------- 
- indexable | [paging](doc/markup/paging.md), [Tree](doc/markup/tree.MD) 
+ indexable | [Tree](doc/markup/tree.MD), [paging](doc/markup/paging.md) 
  indexed | [paging](doc/markup/paging.md) 
 
 
