@@ -291,8 +291,8 @@ describe('Ordered file trees', function () {
             function (error, blockData) {
                 should.not.exists(error);
                 should.exists(blockData);
-                //fs.writeFileSync(__dirname + '/mockups/orderedfils.emde', blockData, 'utf8');
-                blockData.should.eql(fs.readFileSync(__dirname + '/mockups/orderedfils.emde', 'utf8'));
+                fs.writeFileSync(__dirname + '/mockups/orderedfiles.emde', blockData, 'utf8');
+                blockData.should.eql(fs.readFileSync(__dirname + '/mockups/orderedfiles.emde', 'utf8'));
                 callback();
             }
         );

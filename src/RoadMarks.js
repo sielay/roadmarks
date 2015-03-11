@@ -765,8 +765,9 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
             if(!key) {
                 keysCopy = keys;
                 keyMap.sort(function(a,b){
-                    if(a.title === b.title) return 0;
-                    return a.title < b.title ? -1 : 1;
+                    var aT = a.title.toLowerCase(), bT = b.title.toLowerCase();
+                    if(aT === bT) return 0;
+                    return aT < bT ? -1 : 1;
                 });
                 return iterate(null, string);
             }

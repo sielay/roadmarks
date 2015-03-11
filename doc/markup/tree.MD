@@ -29,12 +29,12 @@ Tree path
 * [Just tree](#just-tree)
 ****
 
-* [Ignore](./ignore.mD)
-* [Tree](./tree.MD)
 * [content](./content.MD)
+* [Ignore](./ignore.mD)
 * [media](./media.md)
 * [paging](./paging.md)
 * [snippets](./snippets.md)
+* [Tree](./tree.MD)
 
 
 
@@ -57,13 +57,13 @@ Tree depth
 * [Just tree](#just-tree)
 ****
 
-* [Ignore](./ignore.mD)
-* [Tree](./tree.MD)
 * [content](./content.MD)
 * [doc](./..)
+* [Ignore](./ignore.mD)
 * [media](./media.md)
 * [paging](./paging.md)
 * [snippets](./snippets.md)
+* [Tree](./tree.MD)
 
 
 
@@ -78,13 +78,13 @@ Some terms can be __indexable__ or just **bold**.
 
 [Got to parent](./README.md) | [Got to top](/README.md)
 
-* [Ignore](./ignore.mD)
-* [Tree](./tree.MD)
 * [content](./content.MD)
 * [doc](./..)
+* [Ignore](./ignore.mD)
 * [media](./media.md)
 * [paging](./paging.md)
 * [snippets](./snippets.md)
+* [Tree](./tree.MD)
 
 
 
