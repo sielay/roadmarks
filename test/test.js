@@ -143,7 +143,7 @@ describe('Process file', function () {
             fs.writeFileSync(__dirname + '/mockups/parse.emde', blockData, 'utf8');
             blockData.should.eql(fs.readFileSync(__dirname + '/mockups/parse.emde', 'utf8'));
             // we don't test blockData as it's dynamic
-            fs.writeFileSync(__dirname + '/mockups/tags.ignore.json', JSON.stringify(actual,null,4),'utf8');
+            fs.writeFileSync(__dirname + '/mockups/tags.ignore.json', JSON.stringify(actual, null, 4), 'utf8');
             actual.should.eql(jsonMock('tags.ignore'));
             done();
 
@@ -230,9 +230,9 @@ describe('Formatter', function () {
 
 describe('.git and .hg ignoring', function (done) {
 
-    it('Should not list directory containing .git subfolder', function(next){
+    it('Should not list directory containing .git subfolder', function (next) {
 
-        fs.mkdir(DOC_PATH+'/markup/.git', function(error, success) {
+        fs.mkdir(DOC_PATH + '/markup/.git', function (error, success) {
             if (error && error.code !== 'EEXIST') {
                 console.log(chalk.red(error));
                 return next();
@@ -247,9 +247,9 @@ describe('.git and .hg ignoring', function (done) {
         });
     });
 
-    it('Should not list directory containing .hg subfolder', function(next){
+    it('Should not list directory containing .hg subfolder', function (next) {
 
-        fs.mkdir(DOC_PATH+'/markup/.hg', function(error, success) {
+        fs.mkdir(DOC_PATH + '/markup/.hg', function (error, success) {
             if (error && error.code !== 'EEXIST') {
                 console.log(chalk.red(error));
                 return next();
@@ -266,12 +266,35 @@ describe('.git and .hg ignoring', function (done) {
 
 });
 
-describe('Header links', function() {
+describe('Header links', function () {
 
-    it('Complex links', function() {
+    it('Complex links', function () {
 
         var rm = new RoadMarks();
         rm.linkize('1.2.3-a Łukasz_testing? header `special characters`;.,links How+they%20 behave').should.eql('123-a-%C5%81ukasz_testing-header-special-characterslinks-howthey20-behave');
     });
 
+});
+
+describe('Ordered file trees', function () {
+    it('Orders TOC for files', function (callback) {
+        var rm = new RoadMarks();
+        rm.parse(
+            '<!-- RM(tree:/) --><!-- /RM -->',
+            path.resolve(__dirname + '/../README.MD'),
+            function (tag, filePath, cb) {
+                rm.process(tag, filePath, PROJECT_PATH, cb);
+            },
+            function (tag, filePath, cb) {
+                rm.defaultFormatter(tag, filePath, PROJECT_PATH, cb);
+            },
+            function (error, blockData) {
+                should.not.exists(error);
+                should.exists(blockData);
+                //fs.writeFileSync(__dirname + '/mockups/orderedfils.emde', blockData, 'utf8');
+                blockData.should.eql(fs.readFileSync(__dirname + '/mockups/orderedfils.emde', 'utf8'));
+                callback();
+            }
+        );
+    });
 });

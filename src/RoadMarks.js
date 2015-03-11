@@ -212,9 +212,6 @@ RoadMarks.prototype.getFiles = function (absPath, rootPath, callback) {
     }
     this.findDocFiles(absPath, rootPath, false, function (error, list) {
         if (error) throw Error;
-        list.forEach(function (item) {
-            //that.debug(3, 'RoadMarks.getFiles#file', item);
-        });
         that.organizeFiles(list, function (error, tree) {
             if (error) throw Error;
             callback(null, that.setFiles(absPath, tree));
@@ -466,7 +463,7 @@ RoadMarks.prototype.parse = function (content, absFilePath, processor, formatter
                 match[3].split(',').forEach(function (one) {
                     var kv = one.split(':');
                     params[kv[0]] = kv[1] || true;
-                    if(params[kv[0]] === 'false') {
+                    if (params[kv[0]] === 'false') {
                         params[kv[0]] = false;
                     }
                 });
@@ -536,16 +533,16 @@ function limitContentDepth(depth, elem) {
 
 function flat(object, arr) {
 
-    if(!arr) arr = [];
+    if (!arr) arr = [];
 
-    if(object === true) {
+    if (object === true) {
         return arr;
     }
     var keys = Object.keys(object);
 
-    keys.forEach(function(key){
+    keys.forEach(function (key) {
         arr.push(key);
-        flat(object[key],arr);
+        flat(object[key], arr);
     });
 
     return arr;
@@ -573,7 +570,7 @@ RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
 
             siblings = flat(tree);
             idx = siblings.indexOf(path.basename(path.dirname(absFilePath)));
-            if(idx >= 0) siblings.splice(idx,1);
+            if (idx >= 0) siblings.splice(idx, 1);
             siblings.sort();
             idx = siblings.indexOf(fileName);
             if (idx > 0) tag.previous = siblings[idx - 1];
@@ -639,6 +636,27 @@ RoadMarks.prototype.process = function (tag, absFilePath, rootPath, callback) {
     this.get(absFilePath, gotContent);
 };
 
+RoadMarks.prototype.getTitle = function (fullPath, callback) {
+
+    var indexPath = fullPath,
+        key = path.basename(fullPath),
+        isDir = fs.lstatSync(fullPath).isDirectory();
+
+
+    if (isDir) {
+        if (fs.existsSync(fullPath + '/README.md')) {
+            indexPath = fullPath + '/README.md';
+        }
+    }
+
+    this.get(indexPath, function (error, fileTag) {
+        if (error) {
+            return callback(error);
+        }
+        callback(null, (fileTag && fileTag.title && !(isDir && fileTag.title === 'README')) ? fileTag.title : (key !== '..') ? key : path.basename(fullPath), fileTag);
+    });
+};
+
 RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, callback) {
 
     var string = '',
@@ -672,11 +690,11 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
     }
 
     function tableCheck(error, string) {
-        if(error) return callback(error);
-        if(tag.table) {
+        if (error) return callback(error);
+        if (tag.table) {
             var definitions = Object.keys(rows);
             definitions.sort();
-            definitions.forEach(function(row){
+            definitions.forEach(function (row) {
                 string += ' ' + row + ' | ' + rows[row].join(', ') + ' ' + EOL;
             });
         }
@@ -734,7 +752,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
     function files(string, dir, parent, rootdir, indent, cb) {
 
-        var keys = Object.keys(dir);
+        var keys = Object.keys(dir), keysCopy = _.clone(keys), keyMap = [];
 
         if (keys && keys.length > 0 && indent === 0 && (tag.content && tag.content.items)) {
             string += EOL + '****' + EOL + EOL;
@@ -742,38 +760,51 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
         indent = indent || 0;
 
-        function iterate(error, string) {
+        function sortKeysIterate() {
             var key = keys.shift();
-            if (!key) {
+            if(!key) {
+                keysCopy = keys;
+                keyMap.sort(function(a,b){
+                    if(a.title === b.title) return 0;
+                    return a.title < b.title ? -1 : 1;
+                });
+                return iterate(null, string);
+            }
+
+            that.getTitle(path.resolve(parent + '/' + key), function(error, title, tag) {
+                if(error) {
+                    return cb(error);
+                }
+                keyMap.push({
+                    title: title,
+                    key: key,
+                    tag: tag
+                });
+                sortKeysIterate();
+            });
+
+
+        }
+
+        function iterate(error, string) {
+            var keyEntry = keyMap.shift();
+            if (!keyEntry) {
                 return cb(null, string);
             }
+            var key = keyEntry.key,
+                fileTag = keyEntry.tag,
+                title = keyEntry.title,
+                fullPath = path.resolve(parent + '/' + key);
 
-            var fullPath = path.resolve(parent + '/' + key),
-                indexPath = fullPath,
-                isDir = fs.lstatSync(fullPath).isDirectory();
 
 
-            if (isDir) {
-                if (fs.existsSync(fullPath + '/README.md')) {
-                    indexPath = fullPath + '/README.md';
-                }
-            }
-
-            that.debug(1, 'fp', fullPath);
-
-            that.debug(2, 'fullPath', fullPath);
-            that.debug(2, 'indexPath', indexPath);
-
-            that.get(indexPath, function (error, fileTag) {
-
-                var title = (fileTag && fileTag.title && !(isDir && fileTag.title === 'README')) ? fileTag.title : (key !== '..') ? key : path.basename(fullPath);
                 var directPath = path.relative(rootdir, fullPath);
 
                 if (!tag.nofiles) {
 
                     if (tag.table) {
 
-                        if(!rows[title]) rows[title] = [];
+                        if (!rows[title]) rows[title] = [];
                         rows[title].push('[' + path.basename(fullPath) + '](' + path.relative(rootdir, fullPath) + ')');
 
                     } else {
@@ -794,7 +825,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
                         if (tag.table) {
 
-                            if(!rows[image]) rows[image] = [];
+                            if (!rows[image]) rows[image] = [];
                             rows[image].push('[' + title + '](' + directPath + ')');
 
                         } else {
@@ -815,7 +846,7 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
 
                         if (tag.table) {
 
-                            if(!rows[definition]) rows[definition] = [];
+                            if (!rows[definition]) rows[definition] = [];
                             rows[definition].push('[' + title + '](' + directPath + ')');
 
                         } else {
@@ -834,10 +865,11 @@ RoadMarks.prototype.defaultFormatter = function (tag, absPath, projectAbsPath, c
                     return files(string, dir[key], fullPath, rootdir, indent + 1, iterate);
                 }
                 iterate(null, string);
-            });
+
         }
 
-        iterate(null, string);
+        sortKeysIterate();
+
     }
 
     if (tag.files) {
