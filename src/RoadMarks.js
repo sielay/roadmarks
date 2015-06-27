@@ -35,6 +35,8 @@ function RoadMarks(config) {
         fileRepo = {},
         blockRepo = {};
 
+	console.log(defaultExcludes);
+
     this.verbose = (config && config.verbose) || false;
 
     /**

@@ -1,24 +1,36 @@
 #!/usr/bin/env node
 var cliArgs = require('command-line-args'),
-    chalk   = require('chalk'),
-    runner  = require('./../src/runner');
+	chalk   = require('chalk'),
+	runner  = require('./../src/runner'),
+	fs      = require('fs'),
+	EOL     = require('os').EOL;
 
 /* define the command-line options */
 var cli = cliArgs([
-    {name: 'verbose', type: Boolean, alias: 'v', description: 'Write plenty output'},
-    {name: 'verbose2', type: Boolean, alias: 'vv', description: 'Write plenty output'},
-    {name: 'verbose3', type: Boolean, alias: 'vvv', description: 'Write plenty output'},
-    {name: 'help', type: Boolean, alias: 'h', description: 'Print usage instructions'},
-    {name: 'dir', type: String, alias: 'd', description: 'Project main directory'},
-    {name: 'file', type:String, alias: 'f', description: 'Single file'}
+	{name: 'verbose', type: Boolean, alias: 'v', description: 'Write plenty output'},
+	{name: 'verbose2', type: Boolean, alias: 'vv', description: 'Write plenty output'},
+	{name: 'verbose3', type: Boolean, alias: 'vvv', description: 'Write plenty output'},
+	{name: 'help', type: Boolean, alias: 'h', description: 'Print usage instructions'},
+	{name: 'dir', type: String, alias: 'd', description: 'Project main directory'},
+	{name: 'file', type: String, alias: 'f', description: 'Single file'}
 ]);
 
 /* parse the supplied command-line values */
 try {
-    var options = cli.parse();
+	var options = cli.parse();
 } catch (e) {
-    console.error(chalk.red(e));
-    return;
+	console.error(chalk.red(e));
+	return;
+}
+if (fs.existsSync(process.cwd() + '/.roadmarksignore')) {
+	var content = fs.readFileSync(process.cwd() + '/.roadmarksignore', 'utf8').split(EOL);
+	if(content.length) {
+		var excludes = [];
+		content.forEach(function(ex){
+			excludes.push(new RegExp(ex));
+		});
+		options.defaultExcludes = excludes;
+	}
 }
 
 if (options.verbose) options.verbose = 1;
