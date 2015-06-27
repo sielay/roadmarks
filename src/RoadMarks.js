@@ -35,8 +35,6 @@ function RoadMarks(config) {
         fileRepo = {},
         blockRepo = {};
 
-	console.log(defaultExcludes);
-
     this.verbose = (config && config.verbose) || false;
 
     /**
@@ -648,7 +646,9 @@ RoadMarks.prototype.getTitle = function (fullPath, callback) {
     if (isDir) {
         if (fs.existsSync(fullPath + '/README.md')) {
             indexPath = fullPath + '/README.md';
-        }
+        } else {
+			return callback(null, key);
+		}
     }
 
     this.get(indexPath, function (error, fileTag) {
