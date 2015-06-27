@@ -27,7 +27,9 @@ if (fs.existsSync(process.cwd() + '/.roadmarksignore')) {
 	if(content.length) {
 		var excludes = [];
 		content.forEach(function(ex){
-			excludes.push(new RegExp(ex));
+			if(ex.length > 0) {
+				excludes.push(new RegExp(ex));
+			}
 		});
 		options.defaultExcludes = excludes;
 	}
