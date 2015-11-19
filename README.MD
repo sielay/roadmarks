@@ -1,6 +1,8 @@
 Roadmarks
 =========
 
+[![Join the chat at https://gitter.im/sielay/roadmarks](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sielay/roadmarks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Extensive tool to create and maintain Markdown documentation tables of contents and navigation
 
 This project was originally called [tocmd](https://github.com/sielay/tocmd), but because large use of that name I decided to rename it.
